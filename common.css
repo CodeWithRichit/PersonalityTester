@@ -1,0 +1,86 @@
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1rem;
+    background: rgba(11, 15, 25, 0.85);
+    backdrop-filter: blur(10px);
+    color: rgb(235, 194, 194);
+    z-index: 1000;
+}
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    font-family:sans-serif;
+    color: rgb(235, 194, 194);
+}
+.nav-links {
+    display: flex;
+    gap: 3rem;
+}
+.nav-links a {
+    text-decoration: none;
+    color: #E5E7EB;
+    font-family: 'Raleway', sans-serif;
+}
+.nav-links a:hover {
+    color: #00F5FF;
+}
+
+.footer {
+    background: rgba(11, 15, 25, 0.85);
+    color: #fff;
+    padding: 4rem 2rem 1rem;
+    font-family: sans-serif;
+}
+.footer-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+.footer-logo {
+    font-size: 1.8rem;
+    font-weight: bold;
+    font-family: sans-serif;
+    color: #fff;
+    margin-bottom: 1rem;
+}
+.footer-box p {
+    color: #ccc;
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+.footer-box h3 {
+    font-family: sans-serif;
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: normal;
+    text-transform: none;
+    padding: 0;
+    margin-bottom: 1rem;
+}
+.footer-box a {
+    display: block;
+    color: #ccc;
+    text-decoration: none;
+    margin-bottom: 0.5rem;
+    transition: 0.3s;
+    font-family:sans-serif;
+}
+.footer-box a:hover {
+    color: white;
+}
+.footer-bottom {
+    text-align: center;
+    border-top: 1px solid #333;
+    padding-top: 1rem;
+    font-size: 0.9rem;
+    color: #aaa;
+    font-family: sans-serif;
+}

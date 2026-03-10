@@ -1,0 +1,89 @@
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+body{
+background:rgb(222, 207, 207);
+}
+.hero{
+height:420px;
+background-color:#020d2a;
+display:flex;
+align-items:center;
+justify-content:center;
+text-align:center;
+color:white;
+padding:20px;
+}
+.hero-content{
+max-width:700px;
+}
+.hero h1{
+font-size:42px;
+margin-bottom:15px;
+}
+.hero p{
+font-size:17px;
+opacity:0.9;
+}
+.approach{
+text-align:center;
+padding:70px 20px;
+}
+.approach h3{
+color:#0a0830;
+letter-spacing:2px;
+margin-bottom:10px;
+font-size: large;
+}
+.approach h2{
+font-size:36px;
+margin-bottom:10px;
+}
+.subtitle{
+max-width:700px;
+margin:auto;
+color:black;
+margin-bottom:50px;
+}
+.card-container{
+display:flex;
+justify-content:center;
+gap:30px;
+flex-wrap:wrap;
+}
+.card{
+background:#aaaaaac5;
+width:300px;
+padding:30px;
+border-radius:10px;
+box-shadow:0 5px 20px rgba(0,0,0,0.08);
+text-align:center;
+transition:.3s;
+}
+.card:hover{
+transform:translateY(-8px);
+box-shadow:0 10px 30px rgba(0,0,0,0.12);
+}
+.icon{
+font-size:30px;
+background:#eeeaff;
+color:#6c63ff;
+width:60px;
+height:60px;
+display:flex;
+align-items:center;
+justify-content:center;
+border-radius:50%;
+margin:auto auto 15px;
+}
+.card h3{
+margin-bottom:10px;
+}
+.card p{
+color:#666;
+font-size:14px;
+line-height:1.6;
+}
