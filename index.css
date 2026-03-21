@@ -228,3 +228,44 @@ body{
 .cta-btn:hover{
     transform: translateY(-5px);
 }
+@media (max-width: 600px) {
+    /* Cards */
+    .cards-box {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        padding: 0 1.2rem;
+    }
+ 
+    .card         { padding: 1.5rem; border-radius: 1.2rem; }
+    .card h2      { font-size: 1.4rem; }
+    .card p       { font-size: 1rem; }
+ 
+    /* Hero */
+    .hero         { margin-top: 2.5rem; padding: 1.5rem 1rem; }
+    .hero h1      { font-size: 1.7rem; letter-spacing: 0; }
+    .quote        { font-size: 0.9rem; }
+ 
+    /* How it works */
+    .how-it-works { padding: 3rem 1.2rem; }
+    .how-it-works h2 { font-size: 1.6rem; margin-bottom: 2rem; }
+    .step         { padding: 1.4rem; }
+    .step h3      { font-size: 1.1rem; }
+ 
+    /* Personality description */
+    .personality-description { padding: 3rem 1.2rem; margin-top: 2rem; gap: 2rem; }
+    .left-content h2 { font-size: 1.6rem; }
+    .left-content p  { font-size: 1rem; line-height: 1.8; }
+ 
+    /* FAQ */
+    .faq-section  { padding: 3rem 1.2rem; }
+    .faq-section h2 { font-size: 1.6rem; margin-bottom: 2rem; }
+    .faq-container { grid-template-columns: 1fr; gap: 0; }
+    .faq-box      { margin-bottom: 0.8rem; }
+ 
+    /* CTA */
+    .cta-section  { padding: 3rem 1rem; }
+    .cta-box      { padding: 2rem 1.5rem; border-radius: 1.2rem; }
+    .cta-box h2   { font-size: 1.5rem; }
+    .cta-box p    { font-size: 0.95rem; }
+    .cta-btn      { padding: 0.8rem 2rem; font-size: 0.9rem; width: 100%; }
+}
