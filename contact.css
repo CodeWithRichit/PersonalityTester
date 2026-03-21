@@ -115,3 +115,49 @@ textarea {
 .submit-btn:hover {
     background: #020d2ab9;
 }
+@media (max-width: 480px) {
+    .container {
+        width: 95%;
+        margin-top: 3rem;
+        gap: 20px;
+    }
+    .info-section h2 {
+        font-size: 20px;
+    }
+    .info-section p {
+        font-size: 14px;
+    }
+    .email-card {
+        padding: 18px;
+        gap: 14px;
+    }
+    .email-details h3 {
+        font-size: 15px;
+    }
+    .email-details p {
+        font-size: 13px;
+    }
+    .form-header {
+        padding: 20px;
+    }
+    .form-header h2 {
+        font-size: 18px;
+    }
+    .form-header p {
+        font-size: 13px;
+    }
+    .contact-form {
+        padding: 20px 16px;
+    }
+    .input-group {
+        margin-bottom: 18px;
+    }
+    input, textarea {
+        font-size: 14px;
+        padding: 10px;
+    }
+    .submit-btn {
+        padding: 13px 24px;
+        font-size: 14px;
+    }
+}
