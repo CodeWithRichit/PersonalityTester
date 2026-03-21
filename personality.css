@@ -165,3 +165,30 @@ a {
     line-height: 1.5;
     font-weight: 300;
 }
+@media (max-width: 400px) {
+    .analysts-box,
+    .diplomats-box,
+    .sentinels-box,
+    .explorers-box,
+    .big5-box {
+        grid-template-columns: 1fr 1fr;
+        margin: 0.5rem;
+        padding: 0.8rem;
+        gap: 0.6rem;
+    }
+    .analysts-box img,
+    .diplomats-box img,
+    .sentinels-box img,
+    .explorers-box img,
+    .big5-box img {
+        height: 100px;
+        max-width: 100px;
+    }
+    .aname, .sname, .dname, .ename, .b5name {
+        font-size: 0.8rem;
+    }
+    .adescribe, .sdescribe, .edescribe, .ddescribe,
+    .b5describe {
+        font-size: 0.75rem;
+    }
+}
