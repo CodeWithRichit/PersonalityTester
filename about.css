@@ -87,3 +87,36 @@ color:#666;
 font-size:14px;
 line-height:1.6;
 }
+@media (max-width: 480px) {
+  .hero h1 {
+    font-size: 24px;
+  }
+  .hero p {
+    font-size: 14px;
+  }
+  .approach {
+    padding: 40px 14px;
+  }
+  .approach h3 {
+    font-size: 12px;
+    letter-spacing: 1.5px;
+  }
+  .approach h2 {
+    font-size: 22px;
+  }
+  .subtitle {
+    font-size: 13px;
+    margin-bottom: 28px;
+  }
+  .card {
+    padding: 22px 18px;
+    width: 100%;
+    max-width: 100%;
+  }
+  .card-container {
+    gap: 20px;
+  }
+  .card h3 {
+    font-size: 16px;
+  }
+}
