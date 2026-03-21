@@ -84,3 +84,76 @@
     color: #aaa;
     font-family: sans-serif;
 }
+@media (max-width: 768px) {
+    /* Navbar */
+    .nav-toggle {
+        display: flex;
+    }
+
+    .nav-links {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        flex-direction: column;
+        gap: 0;
+        background: rgba(11, 15, 25, 0.97);
+        backdrop-filter: blur(10px);
+        padding: 1rem 0;
+    }
+
+    .nav-links.open {
+        display: flex;
+    }
+
+    .nav-links a {
+        padding: 0.75rem 1.5rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .nav-links a:last-child {
+        border-bottom: none;
+    }
+
+    /* Footer */
+    .footer {
+        padding: 3rem 1.5rem 1rem;
+    }
+
+    .footer-container {
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+        gap: 1.5rem;
+    }
+}
+
+/* ─── RESPONSIVE: MOBILE (≤ 480px) ──────────────────── */
+@media (max-width: 480px) {
+    /* Navbar */
+    .logo {
+        font-size: 1.2rem;
+    }
+
+    /* Footer */
+    .footer {
+        padding: 2.5rem 1rem 1rem;
+    }
+
+    .footer-container {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .footer-logo {
+        font-size: 1.5rem;
+    }
+
+    .footer-box p,
+    .footer-box a {
+        font-size: 0.9rem;
+    }
+
+    .footer-bottom {
+        font-size: 0.8rem;
+    }
+}
