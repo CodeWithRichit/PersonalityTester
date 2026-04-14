@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login – PersonalityTester</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Jost', sans-serif;
+            background-color: #020d2a;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        main {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .wrap {
+            width: 100%;
+            max-width: 500px;
+            padding: 5rem 3rem;
+            border: 2px solid rgba(158,129,129,0.196);
+            opacity: 0.9;
+            border-radius: 12%;
+        }
+        .eyebrow {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 1.5rem;
+            font-weight: 300;
+            color: #e8d5c4;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            text-align: center;
+            margin-bottom: 1.7rem;
+        }
+        h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.6rem;
+            font-weight: 300;
+            color: #e8d5c4;
+            letter-spacing: 1px;
+            text-align: center;
+            margin-bottom: 2.8rem;
+            line-height: 1;
+        }
+        .field { margin-bottom: 1.6rem; }
+        label {
+            display: block;
+            font-family: sans-serif;
+            font-size: 0.8rem;
+            font-weight: 400;
+            color: #c6a1a1;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 0.6rem;
+        }
+        input[type="email"],
+        input[type="password"],
+        input[type="text"] {
+            width: 100%;
+            padding: 0.6rem 0;
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            color: #e8d5c4;
+            font-family: sans-serif;
+            font-size: 0.9rem;
+            font-weight: 300;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+        input:focus { border-bottom-color: #d4a853; }
+        input::placeholder { color: #beacac; }
+        .pw-wrap { position: relative; }
+        .pw-wrap input { padding-right: 2rem; }
+        .btn-main {
+            width: 100%;
+            padding: 0.85rem;
+            background: transparent;
+            border: 1px solid rgba(212,168,83,0.35);
+            border-radius: 1px;
+            color: #d4a853;
+            font-family: 'Jost', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 400;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: background 0.3s, border-color 0.3s, color 0.3s;
+            margin-top: 0.5rem;
+        }
+        .btn-main:hover {
+            background: rgba(212,168,83,0.05);
+            color: #e8c870;
+        }
+        .card-footer {
+            text-align: center;
+            margin-top: 2rem;
+            font-family: sans-serif;
+            font-size: 1rem;
+            font-weight: 300;
+            color: #7a6a6a;
+            letter-spacing: 1px;
+        }
+        .card-footer a {
+            color: #b49898;
+            text-decoration: none;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        .card-footer a:hover { color: #d4a853; }
+        /* hide/show views */
+        .view { display: none; }
+        .view.active { display: block; }
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%) translateY(10px);
+            background: rgba(8,18,45,0.97);
+            border: 1px solid rgba(212,168,83,0.12);
+            color: #8a7a7a;
+            padding: 0.6rem 1.4rem;
+            border-radius: 1px;
+            font-family: 'Jost', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 300;
+            letter-spacing: 2px;
+            opacity: 0;
+            transition: opacity 0.3s, transform 0.3s;
+            z-index: 100;
+            white-space: nowrap;
+        }
+        .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+    </style>
+</head>
+<body>
+<main>
+    <div class="wrap">
+        <!-- ── LOGIN VIEW ── -->
+        <div class="view active" id="loginView">
+            <p class="eyebrow">Welcome</p>
+            <h1>Log in</h1>
+
+            <div class="field">
+                <label for="loginEmail">Email</label>
+                <input type="email" id="loginEmail" placeholder="a@example.com" autocomplete="email">
+            </div>
+            <div class="field">
+                <label for="loginPassword">Password</label>
+                <div class="pw-wrap">
+                    <input type="password" id="loginPassword" autocomplete="current-password">
+                </div>
+            </div>
+            <button class="btn-main" id="loginBtn">Continue</button>
+            <p class="card-footer">No account? <a id="goSignup">Create one</a></p>
+        </div>
+        <!-- ── SIGNUP VIEW ── -->
+        <div class="view" id="signupView">
+            <p class="eyebrow">Join us</p>
+            <h1>Sign up</h1>
+            <div class="field">
+                <label for="signupName">Name</label>
+                <input type="text" id="signupName" placeholder="Your name" autocomplete="name">
+            </div>
+            <div class="field">
+                <label for="signupEmail">Email</label>
+                <input type="email" id="signupEmail" placeholder="a@example.com" autocomplete="email">
+            </div>
+            <div class="field">
+                <label for="signupPassword">Password</label>
+                <input type="password" id="signupPassword" autocomplete="new-password">
+            </div>
+            <div class="field">
+                <label for="signupConfirm">Confirm Password</label>
+                <input type="password" id="signupConfirm" autocomplete="new-password">
+            </div>
+            <button class="btn-main" id="signupBtn">Create Account</button>
+            <p class="card-footer">Already have an account? <a id="goLogin">Log in</a></p>
+        </div>
+    </div>
+</main>
+<div class="toast" id="toast"></div>
+<script>
+    // ── Toast ──
+    function showToast(msg) {
+        const t = document.getElementById('toast');
+        t.textContent = msg;
+        t.classList.add('show');
+        setTimeout(() => t.classList.remove('show'), 2500);
+    }
+    // ── Toggle views ──
+    document.getElementById('goSignup').addEventListener('click', () => {
+        document.getElementById('loginView').classList.remove('active');
+        document.getElementById('signupView').classList.add('active');
+    });
+    document.getElementById('goLogin').addEventListener('click', () => {
+        document.getElementById('signupView').classList.remove('active');
+        document.getElementById('loginView').classList.add('active');
+    });
+    // ── Auto-fill remembered email on login ──
+    const saved = localStorage.getItem('pt_remembered_email');
+    if (saved) { document.getElementById('loginEmail').value = saved; }
+    // ── Login ──
+    document.getElementById('loginBtn').addEventListener('click', () => {
+        const email    = document.getElementById('loginEmail').value.trim();
+        const password = document.getElementById('loginPassword').value;
+        if (!email || !password) { showToast('Please fill in all fields.'); return; }
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showToast('Invalid email address.'); return; }
+        const stored = localStorage.getItem('pt_account_' + email);
+        if (!stored) { showToast('No account found. Please sign up.'); return; }
+        const account = JSON.parse(stored);
+        if (account.password !== password) { showToast('Incorrect password.'); return; }
+        localStorage.setItem('pt_remembered_email', email);
+        showToast('Signing in…');
+        setTimeout(() => { window.location.href = 'index.html'; }, 1200);
+    });
+    // ── Signup ──
+    document.getElementById('signupBtn').addEventListener('click', () => {
+        const name     = document.getElementById('signupName').value.trim();
+        const email    = document.getElementById('signupEmail').value.trim();
+        const password = document.getElementById('signupPassword').value;
+        const confirm  = document.getElementById('signupConfirm').value;
+        if (!name || !email || !password || !confirm) { showToast('Please fill in all fields.'); return; }
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showToast('Invalid email address.'); return; }
+        if (password.length < 6) { showToast('Password must be at least 6 characters.'); return; }
+        if (password !== confirm) { showToast('Passwords do not match.'); return; }
+        const exists = localStorage.getItem('pt_account_' + email);
+        if (exists) { showToast('An account with this email already exists.'); return; }
+        // Save the new account
+        const account = { name, email, password };
+        localStorage.setItem('pt_account_' + email, JSON.stringify(account));
+        localStorage.setItem('pt_remembered_email', email);
+        showToast('Account created! Signing in…');
+        setTimeout(() => { window.location.href = 'index.html'; }, 1400);
+    });
+    // ── Enter key support ──
+    document.addEventListener('keydown', e => {
+        if (e.key !== 'Enter') return;
+        const loginActive = document.getElementById('loginView').classList.contains('active');
+        if (loginActive) document.getElementById('loginBtn').click();
+        else document.getElementById('signupBtn').click();
+    });
+</script>
+</body>
+</html>
