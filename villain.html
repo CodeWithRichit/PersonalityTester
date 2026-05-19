@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Villain Persona – PersonalityTester</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="common.css">
+    <style>
+        body {
+            background: #020d2a;
+            font-family: 'Raleway', sans-serif;
+            color: white;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        /* ── HERO ── */
+        .hero {
+            text-align: center;
+            padding: 7rem 1rem 1rem;
+        }
+        .hero-label {
+            font-size: 0.68rem;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            color: #e07878;
+            margin-bottom: 0.8rem;
+        }
+        .hero h1 {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(2rem, 7vw, 4.5rem);
+            font-weight: 900;
+            letter-spacing: 4px;
+            color: white;
+            margin-bottom: 0.6rem;
+        }
+        .hero p {
+            color: rgba(255,255,255,0.3);
+            font-size: 0.88rem;
+            letter-spacing: 1px;
+            margin-bottom: 2.5rem;
+        }
+
+        /* ── PICKER ── */
+        .picker {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .picker-label {
+            font-size: 0.65rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.25);
+        }
+        select {
+            appearance: none;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(224,120,120,0.25);
+            border-radius: 6px;
+            color: white;
+            font-family: 'Cinzel', serif;
+            font-size: 1.6rem;
+            font-weight: 700;
+            letter-spacing: 4px;
+            padding: 0.7rem 2rem;
+            cursor: pointer;
+            text-align: center;
+            transition: border-color 0.2s;
+        }
+        select:focus { outline: none; border-color: #e07878; }
+        select option { background: #0a1535; font-family: sans-serif; font-size: 1rem; }
+
+        .reveal-btn {
+            margin-top: 0.5rem;
+            padding: 0.85rem 3.5rem;
+            background: transparent;
+            border: 1px solid rgba(224,120,120,0.4);
+            border-radius: 3px;
+            color: #e07878;
+            font-family: 'Cinzel', serif;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.25s;
+        }
+        .reveal-btn:hover {
+            background: rgba(224,120,120,0.07);
+            border-color: #e07878;
+            letter-spacing: 7px;
+        }
+
+        /* ── CARD ── */
+        .card-wrap {
+            max-width: 620px;
+            margin: 2.5rem auto 5rem;
+            padding: 0 1.2rem;
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+            pointer-events: none;
+        }
+        .card-wrap.visible {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: all;
+        }
+
+        .villain-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(224,120,120,0.15);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        /* top accent bar */
+        .card-top {
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #e07878, #d4a853, transparent);
+        }
+
+        .card-body { padding: 2.5rem 2rem; }
+
+        /* type badge */
+        .type-badge {
+            display: inline-block;
+            font-family: 'Cinzel', serif;
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 4px;
+            color: #e07878;
+            border: 1px solid rgba(224,120,120,0.3);
+            padding: 0.25rem 0.8rem;
+            border-radius: 2px;
+            margin-bottom: 1.2rem;
+        }
+
+        /* villain name with flicker */
+        .villain-name {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(1.8rem, 5vw, 3rem);
+            font-weight: 900;
+            color: #e07878;
+            letter-spacing: 3px;
+            margin-bottom: 0.3rem;
+            animation: flicker 0.6s ease forwards;
+        }
+        @keyframes flicker {
+            0%   { opacity: 0; }
+            20%  { opacity: 1; }
+            25%  { opacity: 0.2; }
+            35%  { opacity: 1; }
+            40%  { opacity: 0.5; }
+            50%  { opacity: 1; }
+            100% { opacity: 1; }
+        }
+
+        .villain-power-label {
+            font-size: 0.6rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.2);
+            margin-bottom: 0.3rem;
+        }
+        .villain-power {
+            font-size: 0.95rem;
+            color: rgba(255,255,255,0.55);
+            margin-bottom: 1.8rem;
+            font-style: italic;
+        }
+
+        /* divider */
+        .divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(224,120,120,0.2), transparent);
+            margin: 1.5rem 0;
+        }
+
+        /* rows */
+        .row { margin-bottom: 1.4rem; }
+        .row-label {
+            font-size: 0.6rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.2);
+            margin-bottom: 0.35rem;
+        }
+        .row-value {
+            font-size: 0.92rem;
+            color: rgba(255,255,255,0.65);
+            line-height: 1.6;
+        }
+        .row-value.gold { color: #d4a853; }
+        .row-value.red  { color: #e07878; }
+
+        /* quote block */
+        .quote-block {
+            margin-top: 1.8rem;
+            padding: 1.2rem 1.5rem;
+            background: rgba(224,120,120,0.04);
+            border-left: 2px solid rgba(224,120,120,0.3);
+            border-radius: 0 6px 6px 0;
+        }
+        .quote-text {
+            font-family: 'Cinzel', serif;
+            font-size: 0.95rem;
+            font-style: italic;
+            color: rgba(255,255,255,0.6);
+            line-height: 1.7;
+        }
+        .quote-attr {
+            font-size: 0.65rem;
+            letter-spacing: 2px;
+            color: rgba(255,255,255,0.2);
+            text-transform: uppercase;
+            margin-top: 0.5rem;
+        }
+
+        /* villain match */
+        .match-tag {
+            display: inline-block;
+            background: rgba(212,168,83,0.08);
+            border: 1px solid rgba(212,168,83,0.2);
+            color: #d4a853;
+            font-size: 0.8rem;
+            padding: 0.3rem 0.9rem;
+            border-radius: 3px;
+            margin-top: 0.3rem;
+        }
+
+        @media (max-width: 480px) {
+            .card-body { padding: 1.8rem 1.2rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="navbar">
+    <a href="index.html" style="text-decoration:none;color:inherit;"><div class="logo">PersonalityTester</div></a>
+    <div class="nav-links">
+        <a href="personality.html">Personality Theories</a>
+        <a href="about.html">About us</a>
+        <a href="contact.html">Contact</a>
+    </div>
+</div>
+
+<div class="hero">
+    <p class="hero-label">Dark Side Unlocked</p>
+    <h1>What Kind of Villain Are You?</h1>
+    <p>Every personality type has a dark side. Time to meet yours.</p>
+
+    <div class="picker">
+        <span class="picker-label">Select your MBTI type</span>
+        <select id="typeSelect">
+            <option value="">— Pick —</option>
+            <option>INTJ</option><option>INTP</option><option>ENTJ</option><option>ENTP</option>
+            <option>INFJ</option><option>INFP</option><option>ENFJ</option><option>ENFP</option>
+            <option>ISTJ</option><option>ISFJ</option><option>ESTJ</option><option>ESFJ</option>
+            <option>ISTP</option><option>ISFP</option><option>ESTP</option><option>ESFP</option>
+        </select>
+        <button class="reveal-btn" onclick="revealVillain()">Reveal My Dark Side</button>
+    </div>
+</div>
+
+<!-- Result Card -->
+<div class="card-wrap" id="cardWrap">
+    <div class="villain-card">
+        <div class="card-top"></div>
+        <div class="card-body">
+            <div class="type-badge" id="typeBadge"></div>
+            <div class="villain-name" id="villainName"></div>
+            <div class="villain-power-label">Evil Power</div>
+            <div class="villain-power" id="villainPower"></div>
+
+            <div class="divider"></div>
+
+            <div class="row">
+                <div class="row-label">Weakness</div>
+                <div class="row-value" id="villainWeakness"></div>
+            </div>
+            <div class="row">
+                <div class="row-label">Villainous Strategy</div>
+                <div class="row-value" id="villainStrategy"></div>
+            </div>
+            <div class="row">
+                <div class="row-label">Most Likely to Say</div>
+                <div class="row-value gold" id="villainCatchphrase"></div>
+            </div>
+            <div class="row">
+                <div class="row-label">How They Get Caught</div>
+                <div class="row-value red" id="villainDownfall"></div>
+            </div>
+
+            <div class="quote-block">
+                <div class="quote-text" id="villainQuote"></div>
+                <div class="quote-attr">— Your villain's signature line</div>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="row">
+                <div class="row-label">Your Villain Match</div>
+                <div id="villainMatches"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+const villains = {
+    INTJ: {
+        name: "The Mastermind",
+        power: "10 steps ahead of everyone in the room — always.",
+        weakness: "Underestimates the chaos factor of unpredictable humans.",
+        strategy: "Does nothing visibly evil. Just removes obstacles quietly until they win.",
+        catchphrase: "I didn't lose. I simply found a more permanent solution.",
+        downfall: "Gets bored and starts leaving clues on purpose.",
+        quote: "You thought you were watching me. Adorable.",
+        matches: ["Thanos", "Hannibal Lecter", "Moriarty"]
+    },
+    INTP: {
+        name: "The Architect of Chaos",
+        power: "Designs systems so complex, even they forget how to stop them.",
+        weakness: "Forgets to actually execute the evil plan.",
+        strategy: "Builds a theoretical framework for world domination. Never launches it.",
+        catchphrase: "Technically, it's not illegal if nobody can prove it exists.",
+        downfall: "Gets distracted researching a more elegant version of the plan.",
+        quote: "I didn't want to rule the world. I just wanted to see if I could.",
+        matches: ["Rick Sanchez", "Dr. Doofenshmirtz", "The Riddler"]
+    },
+    ENTJ: {
+        name: "The Iron Chancellor",
+        power: "Turns every organization into a weapon — legally.",
+        weakness: "Surrounds themselves with yes-men who won't warn them in time.",
+        strategy: "Takes over from the inside. Rises through ranks. Nobody notices until it's done.",
+        catchphrase: "I don't break rules. I rewrite them.",
+        downfall: "Their own ego writes a memo that becomes evidence.",
+        quote: "Leadership isn't about being liked. It's about being inevitable.",
+        matches: ["Frank Underwood", "Miranda Priestly", "Tywin Lannister"]
+    },
+    ENTP: {
+        name: "The Agent of Entropy",
+        power: "Talks their way into — and out of — everything.",
+        weakness: "Gets distracted mid-monologue arguing with themselves.",
+        strategy: "Introduces one small idea that unravels an entire system from within.",
+        catchphrase: "I'm not the villain. I'm just the most interesting person in this story.",
+        downfall: "Debates the hero for so long the hero escapes.",
+        quote: "Order is just chaos that hasn't been questioned yet.",
+        matches: ["The Joker", "Loki", "Moriarty"]
+    },
+    INFJ: {
+        name: "The Silent Prophet",
+        power: "Sees exactly how to destroy you — from just one conversation.",
+        weakness: "Genuinely believes they are doing this for the greater good.",
+        strategy: "Waits. Watches. Acts once, with surgical precision, and disappears.",
+        catchphrase: "I did what everyone else was too cowardly to admit was necessary.",
+        downfall: "Their conscience makes them confess — anonymously, in a letter.",
+        quote: "I don't enjoy this. That's what makes me more dangerous than those who do.",
+        matches: ["Ozymandias", "Light Yagami", "Ra's al Ghul"]
+    },
+    INFP: {
+        name: "The Fallen Idealist",
+        power: "Inspires absolute devotion — and weaponizes it.",
+        weakness: "Still secretly hopes the hero redeems them.",
+        strategy: "Makes people believe so deeply in their cause that they do the dirty work.",
+        catchphrase: "I just wanted a better world. You left me no other choice.",
+        downfall: "Can't bring themselves to hurt the one person who believed in them.",
+        quote: "Every monster was once someone who cared too much.",
+        matches: ["Killmonger", "Anakin Skywalker", "Magneto"]
+    },
+    ENFJ: {
+        name: "The Beloved Dictator",
+        power: "Makes you feel so understood, you'd follow them off a cliff.",
+        weakness: "Their followers eventually realize they were being managed, not loved.",
+        strategy: "Builds a movement. Becomes its moral authority. Becomes untouchable.",
+        catchphrase: "Everything I've done, I've done for you.",
+        downfall: "One person sees through the performance and says it out loud.",
+        quote: "The most dangerous power is making people feel chosen.",
+        matches: ["President Snow", "Jim Jones", "Walter White (season 5)"]
+    },
+    ENFP: {
+        name: "The Charismatic Anarchist",
+        power: "Can convince anyone of anything — including themselves.",
+        weakness: "Forgets what the original evil plan even was.",
+        strategy: "Sparks a revolution, watches it burn, moves on to the next one.",
+        catchphrase: "Rules? I thought those were suggestions for less interesting people.",
+        downfall: "Makes too many allies who all have conflicting agendas.",
+        quote: "I didn't start the fire. But I did hand someone the matches.",
+        matches: ["The Joker (Heath Ledger)", "Harley Quinn", "Loki"]
+    },
+    ISTJ: {
+        name: "The Enforcer",
+        power: "Does unspeakable things — and has the paperwork to justify every single one.",
+        weakness: "Cannot adapt when the rulebook stops applying.",
+        strategy: "Executes orders with terrifying precision and zero moral hesitation.",
+        catchphrase: "I was just following the protocol.",
+        downfall: "Refuses to destroy evidence because it's against procedure.",
+        quote: "Chaos isn't evil. Inefficiency is.",
+        matches: ["Dolores Umbridge", "Agent Smith", "Grand Moff Tarkin"]
+    },
+    ISFJ: {
+        name: "The Quiet Avenger",
+        power: "Remembers every wrong ever done to the people they love. Every single one.",
+        weakness: "Hesitates at the final moment because they still care.",
+        strategy: "Appears harmless for years. Acts when nobody expects it.",
+        catchphrase: "I protected everyone. Now I'm going to protect them from you.",
+        downfall: "Leaves one person unharmed — and that person talks.",
+        quote: "The most dangerous person is the one you stopped watching.",
+        matches: ["Mrs. Danvers", "Amy Dunne (Gone Girl)", "Walter White's mom energy"]
+    },
+    ESTJ: {
+        name: "The System",
+        power: "Doesn't need to be evil. Just needs to be in charge of every process.",
+        weakness: "Cannot improvise when the system breaks.",
+        strategy: "Builds institutions that outlast them and do the harm automatically.",
+        catchphrase: "This isn't personal. This is policy.",
+        downfall: "An audit. A very thorough audit.",
+        quote: "I don't make the rules. I make sure the rules make themselves.",
+        matches: ["Dolores Umbridge", "Judge Frollo", "President Snow"]
+    },
+    ESFJ: {
+        name: "The Smiling Manipulator",
+        power: "Makes you feel guilty for questioning them.",
+        weakness: "Needs to be liked — even by their enemies.",
+        strategy: "Controls through social pressure, guilt, and being the last person anyone suspects.",
+        catchphrase: "After everything I've done for you.",
+        downfall: "Finally pushes someone past the point of caring what others think.",
+        quote: "I'm not manipulating you. I'm just very disappointed.",
+        matches: ["Cersei Lannister", "Amy Dunne", "Nurse Ratched"]
+    },
+    ISTP: {
+        name: "The Ghost Operative",
+        power: "Can dismantle anything — people included — with minimal effort.",
+        weakness: "Doesn't care enough to finish the job properly.",
+        strategy: "In and out before anyone knows something went wrong.",
+        catchphrase: "Nothing personal. You were just in the way.",
+        downfall: "Gets bored and leaves one clue just to see if anyone notices.",
+        quote: "I don't need a reason. I need a result.",
+        matches: ["Anton Chigurh", "The Terminator", "Jason Bourne (if he went bad)"]
+    },
+    ISFP: {
+        name: "The Beautiful Destroyer",
+        power: "Makes destruction look like art.",
+        weakness: "Acts on impulse and regrets it immediately after.",
+        strategy: "Does exactly one catastrophic thing — then vanishes and acts confused.",
+        catchphrase: "I just wanted to feel something real.",
+        downfall: "Leaves evidence that is genuinely gorgeous and completely damning.",
+        quote: "Not everything that burns is meaningless.",
+        matches: ["Harley Quinn", "Alex DeLarge", "Amy Dunne (the aesthetic era)"]
+    },
+    ESTP: {
+        name: "The Opportunist",
+        power: "Reads a room in 3 seconds and turns it into an advantage.",
+        weakness: "No long-term plan means no long-term power.",
+        strategy: "Takes every opportunity as it comes. Leaves before consequences arrive.",
+        catchphrase: "I saw a window. I jumped. Regrets are for people who had a choice.",
+        downfall: "One job too many. One person who remembers their face.",
+        quote: "Luck is just skill with better timing.",
+        matches: ["Jordan Belfort", "Ocean's Eleven crew", "Tony Montana"]
+    },
+    ESFP: {
+        name: "The Glorious Distraction",
+        power: "Nobody suspects the life of the party.",
+        weakness: "Can't keep a secret when the story is really good.",
+        strategy: "Keeps everyone entertained while the real plan unfolds elsewhere.",
+        catchphrase: "Relax. Nobody's watching. Except me. I'm always watching.",
+        downfall: "Tells one too many people the plan because it was too good not to share.",
+        quote: "I'm not the villain. I'm the plot twist.",
+        matches: ["Harley Quinn", "Klaus Hargreeves", "Gatsby (dark timeline)"]
+    }
+};
+
+function revealVillain() {
+    const type = document.getElementById('typeSelect').value;
+    if (!type) { alert('Pick your MBTI type first!'); return; }
+
+    const v = villains[type];
+
+    document.getElementById('typeBadge').textContent        = type;
+    document.getElementById('villainName').textContent      = v.name;
+    document.getElementById('villainPower').textContent     = v.power;
+    document.getElementById('villainWeakness').textContent  = v.weakness;
+    document.getElementById('villainStrategy').textContent  = v.strategy;
+    document.getElementById('villainCatchphrase').textContent = v.catchphrase;
+    document.getElementById('villainDownfall').textContent  = v.downfall;
+    document.getElementById('villainQuote').textContent     = '"' + v.quote + '"';
+
+    const matchContainer = document.getElementById('villainMatches');
+    matchContainer.innerHTML = '';
+    v.matches.forEach(m => {
+        const tag = document.createElement('span');
+        tag.className = 'match-tag';
+        tag.textContent = m;
+        matchContainer.appendChild(tag);
+    });
+
+    // restart flicker animation
+    const nameEl = document.getElementById('villainName');
+    nameEl.style.animation = 'none';
+    nameEl.offsetHeight; // reflow trick
+    nameEl.style.animation = 'flicker 0.6s ease forwards';
+
+    const wrap = document.getElementById('cardWrap');
+    wrap.classList.remove('visible');
+    setTimeout(() => wrap.classList.add('visible'), 50);
+
+    wrap.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+window.addEventListener('DOMContentLoaded', function() {
+    const saved = localStorage.getItem('pt_villain_type');
+    if (saved) {
+        document.getElementById('typeSelect').value = saved;
+        revealVillain();
+    }
+});
+</script>
+
+</body>
+</html>
