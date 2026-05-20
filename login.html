@@ -146,7 +146,6 @@
         <div class="view active" id="loginView">
             <p class="eyebrow">Welcome</p>
             <h1>Log in</h1>
-
             <div class="field">
                 <label for="loginEmail">Email</label>
                 <input type="email" id="loginEmail" placeholder="a@example.com" autocomplete="email">
@@ -208,7 +207,7 @@
     if (saved) { document.getElementById('loginEmail').value = saved; }
     // ── Login ──
     document.getElementById('loginBtn').addEventListener('click', () => {
-        const email    = document.getElementById('loginEmail').value.trim();
+        const email= document.getElementById('loginEmail').value.trim();
         const password = document.getElementById('loginPassword').value;
         if (!email || !password) { showToast('Please fill in all fields.'); return; }
         if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showToast('Invalid email address.'); return; }
