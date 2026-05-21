@@ -3,27 +3,81 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Get in Touch - InnerPersona</title>
+    <title>Get in Touch - PersonalityTester</title>
     <link rel="stylesheet" href="common.css">
     <link rel="stylesheet" href="contact.css">
+
+    <!-- EmailJS SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script>
+        emailjs.init("lp2FRCxUD72WS3kcQ"); // 🔑 Replace with your EmailJS Public Key
+    </script>
+
+    <style>
+        /* Success / Error message toast */
+        .toast {
+            display: none;
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            padding: 14px 24px;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 600;
+            z-index: 9999;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            animation: fadeIn 0.3s ease;
+        }
+        .toast.success {
+            background: #6ac9c7;
+            color: #020d2a;
+        }
+        .toast.error {
+            background: #e74c3c;
+            color: white;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Loading state on button */
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+    </style>
 </head>
 <body>
+
+    <!-- Navbar -->
     <section id="nav">
-    <div class="navbar" id="nav">
-        <a href="index.html" style="text-decoration: none; color: inherit;"><div class='logo'>PersonalityTester</div></a>
-        <div class="nav-links">
-            <a href="personality.html">Personality Theories</a>
-            <a href="about.html">About us</a>
-            <a href="contact.html">Contact</a>
+        <div class="navbar">
+            <a href="index.html" style="text-decoration: none; color: inherit;">
+                <div class="logo">PersonalityTester</div>
+            </a>
+            <div class="nav-links">
+                <a href="personality.html">Personality Theories</a>
+                <a href="about.html">About us</a>
+                <a href="contact.html">Contact</a>
+            </div>
         </div>
-    </div>
+    </section>
+
+    <!-- Main Content -->
     <div class="container">
+
+        <!-- Left Info Section -->
         <div class="info-section">
             <h2>Our Contact Information</h2>
-            <p>If you need any information, please contact us using the details below. We’ll respond as quickly as possible.</p>
+            <p>If you need any information, please contact us using the details below. We'll respond as quickly as possible.</p>
             <div class="email-card">
                 <div class="email-icon">
-                    <svg viewBox="0 0 24 24" width="24" height="24" stroke="white" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                    <svg viewBox="0 0 24 24" width="24" height="24" stroke="white" stroke-width="2"
+                        fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                        <polyline points="22,6 12,13 2,6"></polyline>
+                    </svg>
                 </div>
                 <div class="email-details">
                     <h3>Email Address</h3>
@@ -31,55 +85,137 @@
                 </div>
             </div>
         </div>
+
+        <!-- Right Form Section -->
         <div class="form-container">
             <div class="form-header">
                 <h2>Send Us a Message</h2>
                 <p>We'll get back to you as soon as possible</p>
             </div>
-            <form class="contact-form">
+
+            <form class="contact-form" id="contactForm">
                 <div class="input-group">
-                    <label>Your Full Name <span class="required"></span></label>
-                    <input type="text" placeholder="Enter your full name" required>
+                    <label>Your Full Name <span class="required">*</span></label>
+                    <input
+                        type="text"
+                        id="from_name"
+                        placeholder="Enter your full name"
+                        required
+                    >
                 </div>
+
                 <div class="input-group">
-                    <label>Your Email <span class="required"></span></label>
-                    <input type="email" placeholder="Enter your email address" required>
+                    <label>Your Email <span class="required">*</span></label>
+                    <input
+                        type="email"
+                        id="reply_to"
+                        placeholder="Enter your email address"
+                        required
+                    >
                 </div>
+
                 <div class="input-group">
-                    <label>Your Message <span class="required"></span></label>
-                    <p class="form-instruction">We'd love to hear from you! If you have any questions or thoughts to share, please share below.</p>
-                    <textarea placeholder="Enter your message here" minlength="50" maxlength="500" required></textarea>
-                    <span class="char-limit"></span>
+                    <label>Your Message <span class="required">*</span></label>
+                    <p class="form-instruction">We'd love to hear from you! If you have any questions or thoughts to share, please write below.</p>
+                    <textarea
+                        id="message"
+                        placeholder="Enter your message here"
+                        minlength="50"
+                        maxlength="500"
+                        required
+                    ></textarea>
+                    <span class="char-limit" id="charCount">0 / 500 characters</span>
                 </div>
-                <button type="submit" class="submit-btn">Submit</button>
+
+                <button type="submit" class="submit-btn" id="submitBtn">Submit</button>
             </form>
         </div>
+
     </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast"></div>
+
+    <!-- Footer -->
     <section>
-    <footer class="footer">
-    <div class="footer-container">
-        <div class="footer-box">
-            <h2 class="footer-logo">PersonalityTester</h2>
-            <p>Building modern, responsive and clean websites with great user experience.</p>
-        </div>
-        <div class="footer-box">
-            <h3>Quick Links</h3>
-            <a href="#nav">Home</a>
-            <a href="about.html">About</a>
-            <a href="personality.html">Personality Theories</a>
-            <a href="contact.html">Contact</a>
-        </div>
-        <div class="footer-box">
-            <h3>Contact</h3>
-            <p>richittyagi@gmail.com</p>
-            <p>keshavkumar@gmail.com</p>
-            <p>hemanshpahwa@gmail.com</p>
-        </div>
-    </div>
-    <div class="footer-bottom">
-        <p>© 2026 PersonlityTester. All rights reserved.</p>
-    </div>
-</footer>
-</section>
+        <footer class="footer">
+            <div class="footer-container">
+                <div class="footer-box">
+                    <h2 class="footer-logo">PersonalityTester</h2>
+                    <p>Building modern, responsive and clean websites with great user experience.</p>
+                </div>
+                <div class="footer-box">
+                    <h3>Quick Links</h3>
+                    <a href="#nav">Home</a>
+                    <a href="about.html">About</a>
+                    <a href="personality.html">Personality Theories</a>
+                    <a href="contact.html">Contact</a>
+                </div>
+                <div class="footer-box">
+                    <h3>Contact</h3>
+                    <p>richittyagi@gmail.com</p>
+                    <p>keshavkumar@gmail.com</p>
+                    <p>hemanshpahwa@gmail.com</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 PersonalityTester. All rights reserved.</p>
+            </div>
+        </footer>
+    </section>
+
+    <!-- EmailJS Script -->
+    <script>
+        // Character counter for textarea
+        const messageField = document.getElementById("message");
+        const charCount = document.getElementById("charCount");
+
+        messageField.addEventListener("input", function () {
+            const len = messageField.value.length;
+            charCount.textContent = len + " / 500 characters";
+        });
+
+        // Toast helper
+        function showToast(message, type) {
+            const toast = document.getElementById("toast");
+            toast.textContent = message;
+            toast.className = "toast " + type;
+            toast.style.display = "block";
+            setTimeout(() => {
+                toast.style.display = "none";
+            }, 4000);
+        }
+
+        // Form submit handler
+        document.getElementById("contactForm").addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            const btn = document.getElementById("submitBtn");
+            btn.disabled = true;
+            btn.textContent = "Sending...";
+
+            const params = {
+                from_name: document.getElementById("from_name").value,
+                reply_to:  document.getElementById("reply_to").value,
+                message:   document.getElementById("message").value
+            };
+
+            emailjs.send("personality_app", "template_acnl0de", params)
+                .then(function () {
+                    showToast("✅ Message sent successfully!", "success");
+                    document.getElementById("contactForm").reset();
+                    charCount.textContent = "0 / 500 characters";
+                })
+                .catch(function (error) {
+                    showToast("❌ Failed to send. Please try again.", "error");
+                    console.error("EmailJS error:", error);
+                })
+                .finally(function () {
+                    btn.disabled = false;
+                    btn.textContent = "Submit";
+                });
+        });
+    </script>
+
 </body>
 </html>
